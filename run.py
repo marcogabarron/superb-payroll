@@ -84,16 +84,17 @@ def new_entry():
         employee_id = int(last_id)+1
 
         name = input("Please enter employee's name:\n")
-
-        start_date = input("Please enter employee's Start Date(dd/mm/yy):\n")
-        start_date_valid = start_date.split("/")
-        validate_date(start_date_valid)
-        print(start_date_valid)
-
-        date_birth = input("Please enter employee's Date of Birth(dd/mm/yy):\n")
-        date_birth_valid = date_birth.split("/")
-        validate_date(date_birth_valid)
-        print(date_birth_valid)
+        while True:
+            start_date = input("Please enter employee's Start Date(dd/mm/yy):\n")
+            start_date_valid = start_date.replace("/", "")
+            if validate_date(start_date_valid):
+                break
+        
+        while True:
+            date_birth = input("Please enter employee's Date of Birth(dd/mm/yy):\n")
+            date_birth_valid = date_birth.replace("/", "")
+            if validate_date(date_birth_valid):
+                break
 
         salary = input("Please enter employee's Salary:\n")
 
@@ -101,10 +102,10 @@ def new_entry():
         # print("Please enter number to choose department:\n 1- Administration\n 2- Sales\n 3- Service\n 4- Management\n")
         # department_entry = input("Enter number 1 for option 1, number 2 for option 2, number 3 for option 3 or number 4 for option 4:\n")
 
-        print("New employee entry being created...")
+        print("New employee entry being created...\n")
         data = [employee_id, name, start_date, date_birth, salary, department]
         employee_worksheet.append_row(data)
-        print("New employee entry created in the system!")
+        print("Employee worksheet updated successfully\n")
 
 
     elif user_option == '2':
@@ -116,7 +117,12 @@ def search_employeeID():
     Search for employee ID.
     Ask the user for employee ID and search through employee list to find a match.
     """
-    print("Search employee ID")
+    employee_worksheet = SHEET.worksheet("employee")
+
+    id = input("Please enter employee ID:\n")
+    cell = employee_worksheet.find(id)
+    values_list = employee_worksheet.row_values(cell.row)
+    print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
 
 # def get_data():
 #     """
