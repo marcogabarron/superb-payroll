@@ -21,7 +21,7 @@ def start_menu():
     """
     while True: 
         print("Please choose one option: \n 1- Add new employee \n 2- Search for employee ID\n")
-        user_option = input("Enter number 1 for option 1 or number 2 for option 2\n")
+        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
 
         if validate_option(user_option):
             break
@@ -47,12 +47,48 @@ def validate_option(user_option):
         return False
     return True
 
+def validate_date(date):
+    """
+    Validate date.
+    Implementing a try except to validate date entry.
+    """
+    try:
+        [int(value) for value in date]
+        if len(date) != 6:
+            raise ValueError(
+                f"Date Format invalid."
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    return True 
 
 def new_entry():
     """
     Add a new employee to the system. Write a new employee row on google sheets
     """
-    print("Add employee")
+    while True: 
+        print("Please choose one option: \n 1- Start New Entry \n 2- Return to Main Menu\n")
+        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
+
+        if validate_option(user_option):
+            break
+
+    if user_option == '1':
+        name = input("Please enter employee's name:\n")
+        start_date = input("Please enter employee's Start Date(dd/mm/yy):\n")
+        start_date_valid = start_date.split("/")
+        validate_date(start_date_valid)
+        date_birth = input("Please enter employee's Date of Birth(dd/mm/yy):\n")
+        date_birth_valid = date_birth.split("/")
+        validate_date(date_birth_valid)
+        salary = input("Please enter employee's Salary:\n")
+        department = input("Please enter employee's Department:\n")
+
+    elif user_option == '2':
+        search_employeeID()
+
 
 def search_employeeID():
     """
