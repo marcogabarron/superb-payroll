@@ -30,7 +30,7 @@ class Employee:
     def show_employee(self):
 
         print(f"Employee ID: {self.employee_id} \nName: {self.name} \nStart Date: {self.start_date} \nDate of Birth: {self.date_of_birth} \nSalary: {self.salary} \nDepartment: {self.department}\n")
-        # print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
+        
 
 def start_menu():
     """
