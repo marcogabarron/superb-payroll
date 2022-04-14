@@ -12,6 +12,15 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('superb-payroll')
 
+class Employee:
+    def __init__(self, employee_id, name, start_date, date_of_birth, salary, department):
+        self.employee_id = employee_id
+        self.name = name
+        self.start_date = start_date
+        self.date_of__birth = date_of_birth
+        self.salary = salary
+        self.department = department
+
 def start_menu():
     """
     Start Menu to give user two options: 1- Add new employee  2- Search for employee ID
@@ -64,6 +73,24 @@ def validate_date(date):
 
     return True 
 
+def validate_id(id):
+    """
+    Validate employee ID.
+    Implementing a try except to validate employee ID entry.
+    """
+    employee_worksheet = SHEET.worksheet("employee")
+    try:
+        cell = employee_worksheet.find(id)
+        if cell == None:
+            raise TypeError(
+                f"Employee ID not in the system."
+            )
+    except TypeError as e:
+        print(f"Employee ID not found: {e}, please try again.\n")
+        return False
+
+    return True 
+
 def new_entry():
     """
     Add a new employee to the system. Write a new employee row on google sheets
@@ -99,17 +126,18 @@ def new_entry():
         salary = input("Please enter employee's Salary:\n")
 
         department = input("Please enter employee's department:\n")
-        # print("Please enter number to choose department:\n 1- Administration\n 2- Sales\n 3- Service\n 4- Management\n")
-        # department_entry = input("Enter number 1 for option 1, number 2 for option 2, number 3 for option 3 or number 4 for option 4:\n")
 
         print("New employee entry being created...\n")
+        print(f"New emplyee ID number is: {employee_id}")
         data = [employee_id, name, start_date, date_birth, salary, department]
         employee_worksheet.append_row(data)
         print("Employee worksheet updated successfully\n")
 
 
+
     elif user_option == '2':
         start_menu()
+
 
 
 def search_employeeID():
@@ -118,38 +146,24 @@ def search_employeeID():
     Ask the user for employee ID and search through employee list to find a match.
     """
     employee_worksheet = SHEET.worksheet("employee")
+    while True: 
+        print("Please choose one option: \n 1- Start Search for employee ID \n 2- Return to Main Menu\n")
+        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
 
-    id = input("Please enter employee ID:\n")
-    cell = employee_worksheet.find(id)
-    values_list = employee_worksheet.row_values(cell.row)
-    print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
+        if validate_option(user_option):
+            break
 
-# def get_data():
-#     """
-#     Get sales figures input from the user.
-#     """
-#     print("Please enter sales data from the last market.")
-#     print("Data should be six numbers, separated by commas.")
-#     print("Example: 10,20,30,40,50,60\n")
+    if user_option == '1':
+        while True:
+            id = input("Please enter employee ID:\n")
+            if validate_id(id):
+                break
+        
+        cell = employee_worksheet.find(id)
+        values_list = employee_worksheet.row_values(cell.row)
+        print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
 
-#     data = ["0030", "Maria", "09/10/2009", "09/10/1990", "80000", "Sales"]
-#     employee_worksheet = SHEET.worksheet("employee")
-#     # employee_worksheet.append_row(data)
-
-    
-#     cell = employee_worksheet.find("0030")
-#     list_of_dicts = employee_worksheet.get_all_records()
-#     print(list_of_dicts)
-#     value = employee_worksheet.cell(len(list_of_dicts)+1 , 1).value
-#     print(int(value)+1)
-
-#     if cell == None:
-#         print("Nothing equal, please go ahead")
-#         # values_list = employee_worksheet.row_values(cell.row)
-#         # print(values_list)
-
-
-
+    elif user_option == '2':
+        start_menu()
 
 start_menu()
-# get_data()
