@@ -17,9 +17,20 @@ class Employee:
         self.employee_id = employee_id
         self.name = name
         self.start_date = start_date
-        self.date_of__birth = date_of_birth
+        self.date_of_birth = date_of_birth
         self.salary = salary
         self.department = department
+
+    def create_new_employee(self):
+
+        employee_worksheet = SHEET.worksheet("employee")
+        data = [self.employee_id, self.name, self.start_date, self.date_of_birth, self.salary, self.department]
+        employee_worksheet.append_row(data)
+
+    def show_employee(self):
+
+        print(f"Employee ID: {self.employee_id} \nName: {self.name} \nStart Date: {self.start_date} \nDate of Birth: {self.date_of_birth} \nSalary: {self.salary} \nDepartment: {self.department}\n")
+        # print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
 
 def start_menu():
     """
@@ -129,8 +140,8 @@ def new_entry():
 
         print("New employee entry being created...\n")
         print(f"New emplyee ID number is: {employee_id}")
-        data = [employee_id, name, start_date, date_birth, salary, department]
-        employee_worksheet.append_row(data)
+        new_employee = Employee(employee_id, name, start_date, date_birth, salary, department)
+        new_employee.create_new_employee()
         print("Employee worksheet updated successfully\n")
 
 
@@ -161,7 +172,8 @@ def search_employeeID():
         
         cell = employee_worksheet.find(id)
         values_list = employee_worksheet.row_values(cell.row)
-        print(f"Employee ID: {values_list[0]} \nName: {values_list[1]} \nStart Date: {values_list[2]} \nDate of Birth: {values_list[3]} \nSalary: {values_list[4]} \nDepartment: {values_list[5]}\n")
+        found_employee = Employee(values_list[0], values_list[1], values_list[2], values_list[3], values_list[4], values_list[5])
+        found_employee.show_employee()
 
     elif user_option == '2':
         start_menu()
