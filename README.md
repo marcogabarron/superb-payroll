@@ -1,31 +1,108 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Superb Payroll
 
-Welcome USER_NAME,
+Superb Payroll is a system developed to help payroll specialists to control their employee's list, their start dates, ages, salary and department.
+Superb Payroll saves data in a format that can be interpreted by every payslip generator software and can be processed in a secure and fast way. Superb Payroll generate a master file ready for processing.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
+Avoid errors in your master file and payroll processing confusions.
 
-## Reminders
+![Screens Screenshot](assets/images/screens-screenshot.png)
 
-* Your code must be placed in the `run.py` file
-* Your dependencies must be placed in the `requirements.txt` file
-* Do not edit any of the other files or your code may not deploy properly
+## Purpose 
+------
 
-## Creating the Heroku app
+Purpose of this project is to showcase my abilities in Python to accomplish project 3 of Code Institute course. 
+Project was chosen to develop something meaningful to Payroll market. My wife as a payroll specialist had an important roll guiding me what could be useful to the market.
+Project challenged my abilities and understanding of Python concepts taught on the course.
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+## User Experience
+------
 
-1. `heroku/python`
-2. `heroku/nodejs`
+User experience designed to be a step by step on how to implement a master file in payroll.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+- New employee entry user experience:
+    - Information Requested in order that a master file accepts.
+    - Relevant information is validated to make sure format of master file is kept.
+    - Wrong format is rejected and explained the reason to the user.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+## Features
+------
 
-Connect your GitHub repository and deploy as normal.
+### Existing Features
 
-## Constraints
+- Add new employee entry:
+    - Generate employee ID number following the last employee ID number to avoid duplicated ID.
+    - All information required to add a new employee entry is requested in a clear way to the user.
+    - Relevant information is validated to make sure format of master file is kept.
+    - After validation, information in the wrong format is rejected untill user enter information using the requested format.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+![NewEmployeeEntry Screenshot](assets/images/header-screenshot.png)
 
------
-Happy coding!
+- Search for employee ID:
+    - User will be asked for a employee number.
+    - Employee ID entry is validated.
+    - System search for employee ID after validation if user exists.
+    - All employee information with matching ID is presented to user in a friendly and clear way.
+
+![SearchEmployeeID Screenshot](assets/images/gameoptions-screenshot.png)
+
+### Future Developmets
+
+- Implement other methods of searching. 
+- Implement update employee entry mehod.
+- Add extra information collumns that can be entered.
+
+
+## Data Model
+------
+
+I decided to use an Employee class as my model. The system creates one instance for new employee entry Employee class and one for search employee ID Employee class.
+
+The employee class has two methods create_new_employee and show_employee.
+The create_new_employee add a new row to google spreadsheet using all the data from the instance that is calling the method.
+The show_employee method presents all the information of the instance Employee class to the user in a clear way.
+
+## Testing
+------
+
+I have manually tested this project by doing this:
+
+- Passed the code through a PEP8 linter and confirmed there are no problems.
+
+- Given invalid inputs: strings when numbers are expected, wrong date format and wrong option number.
+
+- Tested in my local terminal and the Code Institute Heroku terminal.
+
+### Bugs
+
+##### Solved Bugs
+
+- Heroku deployment was giving me an error due to an extra line on requirements.txt. Once identified, line was removed and deployment complete successfully.
+
+### Validator Testing
+
+- PEP8: 
+    - No errors were returned from PEP8online.com.
+
+### Unfixed Bugs
+No unfixed bugs
+
+## Deployment
+------
+
+This project was deployed using Code Institute's mock terminal for Heroku.
+
+- Steps for deployment:
+    - Fork or clone this repository.
+    - Create a new Heroku App.
+    - Add config var using credentials for google spreadsheet.
+    - Add config var for PORT 8000.
+    - Set the buildbacks to Python and NodeJS in that order.
+    - Link the Heroku app to the repository.
+    - Click on Deply.
+
+The live link can be found here: <a href="https://superb-payroll.herokuapp.com/" target="_blank">Superb Payroll</a>
+
+## Credits
+------
+- Code Institute for the deployment terminal.
+- Love Sandwich project from CI for google spreadsheet and googleOAuth libraries.

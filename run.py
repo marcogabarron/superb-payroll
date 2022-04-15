@@ -12,8 +12,21 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('superb-payroll')
 
+
 class Employee:
-    def __init__(self, employee_id, name, start_date, date_of_birth, salary, department):
+    """
+    Start Menu to give user two options:
+    1- Add new employee
+    2- Search for employee ID
+    Run a while loop to collect a valid string of data from the user
+    Run validate_option function to option entry is correct.
+    The loop will repeatedly request data,
+    until it is valid.
+    """
+    def __init__(
+        self, employee_id, name, start_date,
+        date_of_birth, salary, department
+    ):
         self.employee_id = employee_id
         self.name = name
         self.start_date = start_date
@@ -22,26 +35,55 @@ class Employee:
         self.department = department
 
     def create_new_employee(self):
-
+        """
+        Start Menu to give user two options:
+        1- Add new employee
+        2- Search for employee ID
+        Run a while loop to collect a valid string of data from the user
+        Run validate_option function to option entry is correct.
+        The loop will repeatedly request data, until it is valid.
+        """
         employee_worksheet = SHEET.worksheet("employee")
-        data = [self.employee_id, self.name, self.start_date, self.date_of_birth, self.salary, self.department]
+        data = [
+            self.employee_id, self.name, self.start_date,
+            self.date_of_birth, self.salary, self.department
+            ]
         employee_worksheet.append_row(data)
 
     def show_employee(self):
+        """
+        Start Menu to give user two options:
+        1- Add new employee
+        2- Search for employee ID
+        Run a while loop to collect a valid string of data from the user
+        Run validate_option function to option entry is correct.
+        The loop will repeatedly request data, until it is valid.
+        """
+        print(
+            f"Employee ID: {self.employee_id} \nName: {self.name} \
+                \nStart Date: {self.start_date} \n\
+                Date of Birth: {self.date_of_birth} \
+                \nSalary: {self.salary} \nDepartment: {self.department}\n"
+            )
 
-        print(f"Employee ID: {self.employee_id} \nName: {self.name} \nStart Date: {self.start_date} \nDate of Birth: {self.date_of_birth} \nSalary: {self.salary} \nDepartment: {self.department}\n")
-        
 
 def start_menu():
     """
-    Start Menu to give user two options: 1- Add new employee  2- Search for employee ID
+    Start Menu to give user two options:
+    1- Add new employee
+    2- Search for employee ID
     Run a while loop to collect a valid string of data from the user
-    Run validate_option function to option entry is correct. 
+    Run validate_option function to option entry is correct.
     The loop will repeatedly request data, until it is valid.
     """
-    while True: 
-        print("Please choose one option: \n 1- Add new employee \n 2- Search for employee ID\n")
-        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
+    while True:
+        print(
+            "Please choose one option: \n\
+             1- Add new employee \n 2- Search for employee ID\n"
+            )
+        user_option = input(
+            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            )
 
         if validate_option(user_option):
             break
@@ -51,6 +93,7 @@ def start_menu():
     elif user_option == '2':
         search_employeeID()
 
+
 def validate_option(user_option):
     """
     Validate if user_option is equal to 1 or 2.
@@ -59,13 +102,15 @@ def validate_option(user_option):
     try:
         if user_option != '1' and user_option != '2':
             raise ValueError(
-                f"Please select options number 1 or 2, you provided {user_option}"
+                f"Please select options number 1 or 2, \
+                 you provided {user_option}"
             )
 
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
     return True
+
 
 def validate_date(date):
     """
@@ -82,7 +127,8 @@ def validate_date(date):
         print(f"Invalid data: {e}, please try again.\n")
         return False
 
-    return True 
+    return True
+
 
 def validate_id(id):
     """
@@ -92,7 +138,7 @@ def validate_id(id):
     employee_worksheet = SHEET.worksheet("employee")
     try:
         cell = employee_worksheet.find(id)
-        if cell == None:
+        if cell is None:
             raise TypeError(
                 f"Employee ID not in the system."
             )
@@ -100,15 +146,22 @@ def validate_id(id):
         print(f"Employee ID not found: {e}, please try again.\n")
         return False
 
-    return True 
+    return True
+
 
 def new_entry():
     """
     Add a new employee to the system. Write a new employee row on google sheets
     """
-    while True: 
-        print("Please choose one option: \n 1- Start New Entry \n 2- Return to Main Menu\n")
-        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
+    while True:
+        print(
+            "Please choose one option: \n\
+             1- Start New Entry \n\
+             2- Return to Main Menu\n"
+            )
+        user_option = input(
+            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            )
 
         if validate_option(user_option):
             break
@@ -118,18 +171,22 @@ def new_entry():
         employee_worksheet = SHEET.worksheet("employee")
 
         list_of_dicts = employee_worksheet.get_all_records()
-        last_id = employee_worksheet.cell(len(list_of_dicts)+1 , 1).value
+        last_id = employee_worksheet.cell(len(list_of_dicts)+1, 1).value
         employee_id = int(last_id)+1
 
         name = input("Please enter employee's name:\n")
         while True:
-            start_date = input("Please enter employee's Start Date(dd/mm/yy):\n")
+            start_date = input(
+                "Please enter employee's Start Date(dd/mm/yy):\n"
+                )
             start_date_valid = start_date.replace("/", "")
             if validate_date(start_date_valid):
                 break
-        
+
         while True:
-            date_birth = input("Please enter employee's Date of Birth(dd/mm/yy):\n")
+            date_birth = input(
+                "Please enter employee's Date of Birth(dd/mm/yy):\n"
+                )
             date_birth_valid = date_birth.replace("/", "")
             if validate_date(date_birth_valid):
                 break
@@ -140,39 +197,47 @@ def new_entry():
 
         print("New employee entry being created...\n")
         print(f"New emplyee ID number is: {employee_id}")
-        new_employee = Employee(employee_id, name, start_date, date_birth, salary, department)
+        new_employee = Employee(
+            employee_id, name, start_date, date_birth, salary, department
+            )
         new_employee.create_new_employee()
         print("Employee worksheet updated successfully\n")
-
-
 
     elif user_option == '2':
         start_menu()
 
 
-
 def search_employeeID():
     """
     Search for employee ID.
-    Ask the user for employee ID and search through employee list to find a match.
+    Ask the user for employee ID and
+    search through employee list to find a match.
     """
     employee_worksheet = SHEET.worksheet("employee")
-    while True: 
-        print("Please choose one option: \n 1- Start Search for employee ID \n 2- Return to Main Menu\n")
-        user_option = input("Enter number 1 for option 1 or number 2 for option 2:\n")
+    while True:
+        print("Please choose one option: \n\
+         1- Start Search for employee ID \n 2- Return to Main Menu\n")
+        user_option = input(
+            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            )
 
         if validate_option(user_option):
             break
 
     if user_option == '1':
         while True:
-            id = input("Please enter employee ID:\n")
+            id = input(
+                "Please enter employee ID:\n"
+                )
             if validate_id(id):
                 break
-        
+
         cell = employee_worksheet.find(id)
         values_list = employee_worksheet.row_values(cell.row)
-        found_employee = Employee(values_list[0], values_list[1], values_list[2], values_list[3], values_list[4], values_list[5])
+        found_employee = Employee(
+            values_list[0], values_list[1],
+            values_list[2], values_list[3], values_list[4], values_list[5]
+            )
         found_employee.show_employee()
 
     elif user_option == '2':
