@@ -45,6 +45,13 @@ User experience designed to be a step by step on how to implement a master file 
 
 ![SearchEmployeeID Screenshot](assets/images/gameoptions-screenshot.png)
 
+- Input validation and error-checking:
+    - You cannot enter wrong menu option. You must enter one of the options requested.
+    - You must enter date of format dd/mm/yy.
+    - You cannot enter inexistent employee ID.
+
+![SearchEmployeeID Screenshot](assets/images/gameoptions-screenshot.png)
+
 ### Future Developmets
 
 - Implement other methods of searching. 

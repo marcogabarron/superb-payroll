@@ -15,13 +15,10 @@ SHEET = GSPREAD_CLIENT.open('superb-payroll')
 
 class Employee:
     """
-    Start Menu to give user two options:
-    1- Add new employee
-    2- Search for employee ID
-    Run a while loop to collect a valid string of data from the user
-    Run validate_option function to option entry is correct.
-    The loop will repeatedly request data,
-    until it is valid.
+    Class to serve as a blueprint for employees.
+    Parameter: employee ID, name, start date, date of birth,
+    salary and department.
+    Class has methods: create_new_employee and show_employee.
     """
     def __init__(
         self, employee_id, name, start_date,
@@ -36,12 +33,9 @@ class Employee:
 
     def create_new_employee(self):
         """
-        Start Menu to give user two options:
-        1- Add new employee
-        2- Search for employee ID
-        Run a while loop to collect a valid string of data from the user
-        Run validate_option function to option entry is correct.
-        The loop will repeatedly request data, until it is valid.
+        The create_new_employee add a new row to google spreadsheet
+        using all the data from the instance that is calling the method.
+        Worksheet: employee.
         """
         employee_worksheet = SHEET.worksheet("employee")
         data = [
@@ -52,17 +46,13 @@ class Employee:
 
     def show_employee(self):
         """
-        Start Menu to give user two options:
-        1- Add new employee
-        2- Search for employee ID
-        Run a while loop to collect a valid string of data from the user
-        Run validate_option function to option entry is correct.
-        The loop will repeatedly request data, until it is valid.
+        The show_employee method presents all the information
+        of the instance Employee class to the user in a clear way.
         """
         print(
             f"Employee ID: {self.employee_id} \nName: {self.name} \
-                \nStart Date: {self.start_date} \n\
-                Date of Birth: {self.date_of_birth} \
+                \nStart Date: {self.start_date}\
+                \nDate of Birth: {self.date_of_birth}\
                 \nSalary: {self.salary} \nDepartment: {self.department}\n"
             )
 
@@ -79,7 +69,8 @@ def start_menu():
     while True:
         print(
             "Please choose one option: \n\
-             1- Add new employee \n 2- Search for employee ID\n"
+             1- Add new employee \n\
+             2- Search for employee ID\n"
             )
         user_option = input(
             "Enter number 1 for option 1 or number 2 for option 2:\n"
@@ -140,7 +131,7 @@ def validate_id(id):
         cell = employee_worksheet.find(id)
         if cell is None:
             raise TypeError(
-                f"Employee ID not in the system."
+                f"Employee ID not in the system"
             )
     except TypeError as e:
         print(f"Employee ID not found: {e}, please try again.\n")
@@ -151,7 +142,10 @@ def validate_id(id):
 
 def new_entry():
     """
-    Add a new employee to the system. Write a new employee row on google sheets
+    Generate employee ID from the last ID registered.
+    Request all the information in order to have everything
+    for a payroll master file.
+    Validation made using the right methods.
     """
     while True:
         print(
@@ -216,7 +210,8 @@ def search_employeeID():
     employee_worksheet = SHEET.worksheet("employee")
     while True:
         print("Please choose one option: \n\
-         1- Start Search for employee ID \n 2- Return to Main Menu\n")
+         1- Start Search for employee ID \n\
+         2- Return to Main Menu\n")
         user_option = input(
             "Enter number 1 for option 1 or number 2 for option 2:\n"
             )
