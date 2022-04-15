@@ -5,7 +5,7 @@ Superb Payroll saves data in a format that can be interpreted by every payslip g
 
 Avoid errors in your master file and payroll processing confusions.
 
-![Screens Screenshot](assets/images/screens-screenshot.png)
+![Screens Screenshot](screens-screenshot.png)
 
 ## Purpose 
 ------
@@ -35,7 +35,7 @@ User experience designed to be a step by step on how to implement a master file 
     - Relevant information is validated to make sure format of master file is kept.
     - After validation, information in the wrong format is rejected untill user enter information using the requested format.
 
-![NewEmployeeEntry Screenshot](assets/images/header-screenshot.png)
+![NewEmployeeEntry Screenshot](newentry-screenshot.png)
 
 - Search for employee ID:
     - User will be asked for a employee number.
@@ -43,14 +43,16 @@ User experience designed to be a step by step on how to implement a master file 
     - System search for employee ID after validation if user exists.
     - All employee information with matching ID is presented to user in a friendly and clear way.
 
-![SearchEmployeeID Screenshot](assets/images/gameoptions-screenshot.png)
+![SearchEmployeeID Screenshot](search-screenshot.png)
 
 - Input validation and error-checking:
     - You cannot enter wrong menu option. You must enter one of the options requested.
     - You must enter date of format dd/mm/yy.
     - You cannot enter inexistent employee ID.
 
-![SearchEmployeeID Screenshot](assets/images/gameoptions-screenshot.png)
+![ValidationData1 Screenshot](validation1-screenshot.png)
+
+![ValidationData2 Screenshot](validation2-screenshot.png)
 
 ### Future Developmets
 
