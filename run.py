@@ -266,6 +266,9 @@ def search_employeeID():
 
 
 def end_menu():
+    """
+    Show good bye message and quits system.
+    """
     print("\nGood Bye! Hope to see you soon.\n")
     quit()
 
