@@ -86,8 +86,7 @@ def start_menu():
         search_employeeID()
 
     elif user_option == '3':
-        print("\nGood Bye! Hope to see you soon\n")
-        quit()
+        end_menu()
 
 
 def validate_option(user_option):
@@ -117,7 +116,7 @@ def validate_date(date):
         [int(value) for value in date]
         if len(date) != 6:
             raise ValueError(
-                f"Date Format invalid."
+                f"Date Format invalid"
             )
     except ValueError as e:
         print(f"\nInvalid data: {e}, please try again.\n")
@@ -196,7 +195,7 @@ def new_entry():
         department = input("Please enter employee's department:\n")
 
         print("New employee entry being created...\n")
-        print(f"New emplyee ID number is: {employee_id}")
+        print(f"New employee ID number is: {employee_id}")
         new_employee = Employee(
             employee_id, name, start_date, date_birth, salary, department
             )
@@ -209,8 +208,7 @@ def new_entry():
         start_menu()
 
     elif user_option == '3':
-        print("\nGood Bye! Hope to see you soon\n")
-        quit()
+        end_menu()
 
 
 def search_employeeID():
@@ -265,5 +263,10 @@ def search_employeeID():
 
     elif user_option == '3':
         start_menu()
+
+
+def end_menu():
+    print("\nGood Bye! Hope to see you soon.\n")
+    quit()
 
 start_menu()
