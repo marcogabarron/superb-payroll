@@ -50,10 +50,10 @@ class Employee:
         of the instance Employee class to the user in a clear way.
         """
         print(
-            f"Employee ID: {self.employee_id} \nName: {self.name} \
+            f"\nEmployee ID: {self.employee_id} \nName: {self.name} \
                 \nStart Date: {self.start_date}\
                 \nDate of Birth: {self.date_of_birth}\
-                \nSalary: {self.salary} \nDepartment: {self.department}\n"
+                \nSalary: {self.salary} \nDepartment: {self.department}"
             )
 
 
@@ -68,12 +68,13 @@ def start_menu():
     """
     while True:
         print(
-            "Please choose one option: \n\
+            "\nPlease choose one option: \n\
              1- Add new employee \n\
-             2- Search for employee ID\n"
+             2- Search for employee ID \n\
+             3- Leave"
             )
         user_option = input(
-            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            "\nEnter number 1, number 2 or number 3 for options:\n"
             )
 
         if validate_option(user_option):
@@ -84,21 +85,25 @@ def start_menu():
     elif user_option == '2':
         search_employeeID()
 
+    elif user_option == '3':
+        print("\nGood Bye! Hope to see you soon\n")
+        quit()
+
 
 def validate_option(user_option):
     """
-    Validate if user_option is equal to 1 or 2.
+    Validate if user_option is equal to 1, 2 or 3.
     Implementing a try except to validate user_option
     """
     try:
-        if user_option != '1' and user_option != '2':
+        if user_option != '1' and user_option != '2' and user_option != '3':
             raise ValueError(
-                f"Please select options number 1 or 2, \
+                f"\nPlease select options number 1, 2 or 3,\
                  you provided {user_option}"
             )
 
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        print(f"\nInvalid data: {e}, please try again.\n")
         return False
     return True
 
@@ -115,7 +120,7 @@ def validate_date(date):
                 f"Date Format invalid."
             )
     except ValueError as e:
-        print(f"Invalid data: {e}, please try again.\n")
+        print(f"\nInvalid data: {e}, please try again.\n")
         return False
 
     return True
@@ -134,7 +139,7 @@ def validate_id(id):
                 f"Employee ID not in the system"
             )
     except TypeError as e:
-        print(f"Employee ID not found: {e}, please try again.\n")
+        print(f"\nEmployee ID not found: {e}, please try again.\n")
         return False
 
     return True
@@ -149,12 +154,13 @@ def new_entry():
     """
     while True:
         print(
-            "Please choose one option: \n\
+            "\nPlease choose one option: \n\
              1- Start New Entry \n\
-             2- Return to Main Menu\n"
+             2- Return to Main Menu \n\
+             3- Leave"
             )
         user_option = input(
-            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            "\nEnter number 1, number 2 or number 3 for options:\n"
             )
 
         if validate_option(user_option):
@@ -168,10 +174,10 @@ def new_entry():
         last_id = employee_worksheet.cell(len(list_of_dicts)+1, 1).value
         employee_id = int(last_id)+1
 
-        name = input("Please enter employee's name:\n")
+        name = input("\nPlease enter employee's name:\n")
         while True:
             start_date = input(
-                "Please enter employee's Start Date(dd/mm/yy):\n"
+                "\nPlease enter employee's Start Date(dd/mm/yy):\n"
                 )
             start_date_valid = start_date.replace("/", "")
             if validate_date(start_date_valid):
@@ -179,7 +185,7 @@ def new_entry():
 
         while True:
             date_birth = input(
-                "Please enter employee's Date of Birth(dd/mm/yy):\n"
+                "\nPlease enter employee's Date of Birth(dd/mm/yy):\n"
                 )
             date_birth_valid = date_birth.replace("/", "")
             if validate_date(date_birth_valid):
@@ -195,10 +201,16 @@ def new_entry():
             employee_id, name, start_date, date_birth, salary, department
             )
         new_employee.create_new_employee()
-        print("Employee worksheet updated successfully\n")
+        print("\nEmployee worksheet updated successfully\n")
+
+        new_entry()
 
     elif user_option == '2':
         start_menu()
+
+    elif user_option == '3':
+        print("\nGood Bye! Hope to see you soon\n")
+        quit()
 
 
 def search_employeeID():
@@ -209,11 +221,12 @@ def search_employeeID():
     """
     employee_worksheet = SHEET.worksheet("employee")
     while True:
-        print("Please choose one option: \n\
+        print("\nPlease choose one option: \n\
          1- Start Search for employee ID \n\
-         2- Return to Main Menu\n")
+         2- List all employees \n\
+         3- Return to Main Menu")
         user_option = input(
-            "Enter number 1 for option 1 or number 2 for option 2:\n"
+            "\nEnter number 1, number 2 or number 3 for options:\n"
             )
 
         if validate_option(user_option):
@@ -222,7 +235,7 @@ def search_employeeID():
     if user_option == '1':
         while True:
             id = input(
-                "Please enter employee ID:\n"
+                "\nPlease enter employee ID:\n"
                 )
             if validate_id(id):
                 break
@@ -235,7 +248,22 @@ def search_employeeID():
             )
         found_employee.show_employee()
 
+        search_employeeID()
+
     elif user_option == '2':
+        list_of_dicts = employee_worksheet.get_all_values()
+        for employee in list_of_dicts:
+            if employee[0] == 'Employee ID':
+                continue
+            individual_employee = Employee(
+                employee[0], employee[1], employee[2],
+                employee[3], employee[4], employee[5]
+                )
+            individual_employee.show_employee()
+
+        search_employeeID()
+
+    elif user_option == '3':
         start_menu()
 
 start_menu()

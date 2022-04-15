@@ -34,8 +34,11 @@ User experience designed to be a step by step on how to implement a master file 
     - All information required to add a new employee entry is requested in a clear way to the user.
     - Relevant information is validated to make sure format of master file is kept.
     - After validation, information in the wrong format is rejected untill user enter information using the requested format.
+    - New employee entry is added to google spreadsheet.
 
 ![NewEmployeeEntry Screenshot](newentry-screenshot.png)
+
+![Spreadsheet Screenshot](spreadsheet-screenshot.png)
 
 - Search for employee ID:
     - User will be asked for a employee number.
